@@ -6,31 +6,40 @@
   <title>致 · [名字] — 信封告白</title>
   <style>
     :root {
-      --ink: #5a3a45;
-      --ink-soft: #8a6572;
-      --paper: #fff5f8;
-      --paper-2: #ffe6ef;
-      --pink: #ff8fb5;
-      --pink-deep: #f06392;
-      --pink-soft: #ffc1d6;
-      --blush: #ff9ebb;
-      --seal: #f06292;
+      --ink: #3f3336;
+      --ink-soft: #7a6a6e;
+      --paper: #faf7f5;
+      --paper-2: #f1e8e4;
+      --rose: #b07a82;
+      --rose-deep: #8f5e67;
+      --rose-soft: #d4b4b8;
+      --blush: #c9959c;
+      --seal: #9a646e;
+      --mist: #e8e2df;
+      --shadow: rgba(74, 52, 56, 0.16);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --display: "Bodoni MT", "Didot", "Palatino Linotype", "Book Antiqua", Georgia, serif;
       --body: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      touch-action: manipulation;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       min-height: 100svh;
       font-family: var(--body);
       color: var(--ink);
       background:
-        radial-gradient(circle at 12% 18%, rgba(255, 182, 210, 0.55), transparent 42%),
-        radial-gradient(circle at 88% 12%, rgba(255, 214, 230, 0.7), transparent 40%),
-        radial-gradient(circle at 70% 88%, rgba(255, 176, 204, 0.35), transparent 45%),
-        linear-gradient(165deg, #ffeaf2 0%, #ffd6e6 45%, #ffc6db 100%);
+        radial-gradient(circle at 18% 12%, rgba(201, 149, 156, 0.22), transparent 46%),
+        radial-gradient(circle at 88% 18%, rgba(232, 226, 223, 0.9), transparent 42%),
+        radial-gradient(circle at 72% 90%, rgba(176, 122, 130, 0.12), transparent 48%),
+        linear-gradient(168deg, #f4efec 0%, #ebe3e0 48%, #e3d8d5 100%);
       overflow: hidden;
+      overscroll-behavior: none;
     }
 
     .stage {
@@ -50,9 +59,9 @@
       font-family: var(--display);
       letter-spacing: 0.22em;
       font-size: 0.9rem;
-      color: var(--pink-deep);
-      opacity: 0.85;
-      transition: opacity 0.35s ease;
+      color: var(--rose-deep);
+      opacity: 0.78;
+      transition: opacity 0.3s var(--ease-out);
       white-space: nowrap;
       pointer-events: none;
     }
@@ -69,22 +78,20 @@
 
     .sparkles i {
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #fff;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
-      opacity: 0.55;
-      box-shadow: 0 0 0 3px rgba(255, 192, 214, 0.25);
-      animation: twinkle 3.6s ease-in-out infinite;
+      opacity: 0.35;
     }
 
-    .sparkles i:nth-child(1) { left: 10%; top: 22%; animation-delay: 0s; }
-    .sparkles i:nth-child(2) { left: 78%; top: 18%; width: 6px; height: 6px; animation-delay: .6s; }
-    .sparkles i:nth-child(3) { left: 18%; top: 72%; width: 5px; height: 5px; animation-delay: 1.2s; }
-    .sparkles i:nth-child(4) { left: 86%; top: 68%; animation-delay: 1.8s; }
-    .sparkles i:nth-child(5) { left: 48%; top: 12%; width: 4px; height: 4px; animation-delay: .3s; }
+    .sparkles i:nth-child(1) { left: 12%; top: 24%; }
+    .sparkles i:nth-child(2) { left: 78%; top: 20%; width: 4px; height: 4px; opacity: 0.28; }
+    .sparkles i:nth-child(3) { left: 20%; top: 74%; width: 3px; height: 3px; opacity: 0.22; }
+    .sparkles i:nth-child(4) { left: 84%; top: 70%; opacity: 0.3; }
+    .sparkles i:nth-child(5) { left: 50%; top: 14%; width: 3px; height: 3px; opacity: 0.2; }
 
-    .is-open .sparkles { opacity: 0.35; }
+    .is-open .sparkles { opacity: 0.2; }
 
     /* —— Envelope —— */
     .mail {
@@ -94,12 +101,13 @@
       flex-direction: column;
       align-items: center;
       gap: 1.1rem;
-      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 0.35s var(--ease-out), transform 0.4s var(--ease-out);
+      will-change: opacity, transform;
     }
 
     .is-open .mail {
       opacity: 0;
-      transform: scale(0.9) translateY(24px);
+      transform: translate3d(0, 18px, 0) scale(0.94);
       pointer-events: none;
     }
 
@@ -107,8 +115,9 @@
       width: min(560px, 94vw);
       aspect-ratio: 1.45 / 1;
       position: relative;
-      filter: drop-shadow(0 22px 36px rgba(240, 99, 146, 0.28));
-      animation: floatIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      box-shadow: 0 18px 36px var(--shadow);
+      border-radius: 10px;
+      animation: floatIn 0.7s var(--ease-out) both;
     }
 
     .envelope {
@@ -120,10 +129,11 @@
       background: transparent;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     .envelope:focus-visible {
-      outline: 2px solid var(--pink-deep);
+      outline: 2px solid var(--rose-deep);
       outline-offset: 8px;
     }
 
@@ -137,30 +147,31 @@
 
     .envelope__back {
       background:
-        linear-gradient(160deg, #ffd0e1 0%, #ffb7d1 48%, #ff9fc3 100%);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+        linear-gradient(160deg, #efe4e1 0%, #e4d2cf 48%, #d9c3bf 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
     }
 
     .envelope__pocket {
       background:
-        linear-gradient(135deg, transparent 49.6%, rgba(255, 255, 255, 0.28) 50%),
-        linear-gradient(225deg, transparent 49.6%, rgba(240, 99, 146, 0.12) 50%),
-        linear-gradient(180deg, #ffd9e8 0%, #ffb4d0 100%);
+        linear-gradient(135deg, transparent 49.6%, rgba(255, 255, 255, 0.22) 50%),
+        linear-gradient(225deg, transparent 49.6%, rgba(143, 94, 103, 0.08) 50%),
+        linear-gradient(180deg, #f0e6e3 0%, #dbc8c4 100%);
       clip-path: polygon(0 36%, 50% 70%, 100% 36%, 100% 100%, 0 100%);
       z-index: 3;
     }
 
     .envelope__flap {
-      background: linear-gradient(180deg, #ffe0ec 0%, #ffb7d1 100%);
+      background: linear-gradient(180deg, #f5ece9 0%, #e0cdc9 100%);
       clip-path: polygon(0 0, 100% 0, 50% 56%);
       transform-origin: top center;
       z-index: 4;
-      transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.7s ease;
+      transition: transform 0.55s var(--ease-out), opacity 0.55s ease;
+      will-change: transform, opacity;
     }
 
     .envelope.is-opening .envelope__flap {
-      transform: translateY(-18%) scaleY(0.15);
-      opacity: 0.15;
+      transform: translate3d(0, -16%, 0) scaleY(0.12);
+      opacity: 0.12;
     }
 
     .envelope__heart {
@@ -181,15 +192,15 @@
       position: absolute;
       width: 72px;
       height: 72px;
-      background: radial-gradient(circle at 35% 30%, #ff8fb5, var(--seal) 60%, #e0487c);
+      background: radial-gradient(circle at 35% 30%, #c9959c, var(--seal) 62%, #7d4f57);
       border-radius: 50%;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 4px 12px rgba(74, 52, 56, 0.18);
     }
 
     .envelope__heart span {
       position: relative;
       z-index: 1;
-      color: #fff7fa;
+      color: #faf7f5;
       font-family: var(--display);
       font-size: 0.78rem;
       letter-spacing: 0.12em;
@@ -197,7 +208,7 @@
 
     .envelope.is-opening .envelope__heart {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.6);
+      transform: translate(-50%, -50%) scale(0.7);
       pointer-events: none;
     }
 
@@ -210,10 +221,10 @@
       font-family: var(--display);
       letter-spacing: 0.16em;
       font-size: clamp(1.25rem, 4vw, 1.65rem);
-      color: #7a4054;
+      color: #5c474c;
       text-align: center;
       pointer-events: none;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
     }
 
     .envelope__label small {
@@ -222,28 +233,36 @@
       font-family: var(--body);
       font-size: 0.78rem;
       letter-spacing: 0.1em;
-      color: #a56678;
+      color: #8a7579;
     }
 
     .open-btn {
       appearance: none;
-      border: 1px solid rgba(240, 99, 146, 0.45);
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--pink-deep);
+      border: 1px solid rgba(143, 94, 103, 0.28);
+      background: rgba(250, 247, 245, 0.82);
+      color: var(--rose-deep);
       font-family: var(--display);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       font-size: 0.95rem;
-      padding: 0.8rem 1.5rem;
+      padding: 0.85rem 1.55rem;
+      min-height: 48px;
       cursor: pointer;
-      border-radius: 999px;
-      transition: background 0.25s ease, transform 0.25s ease;
+      border-radius: 12px;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      box-shadow: 0 6px 16px rgba(74, 52, 56, 0.08);
     }
 
     .open-btn:hover,
     .open-btn:focus-visible {
       background: #fff;
-      transform: translateY(-2px);
+      transform: translateY(-1px);
       outline: none;
+    }
+
+    .open-btn:active {
+      transform: translateY(1px) scale(0.98);
     }
 
     /* —— Letter deck —— */
@@ -257,61 +276,68 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transform: translateY(28px) scale(0.97);
-      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.45s;
+      transform: translate3d(0, 20px, 0) scale(0.98);
+      transition: opacity 0.35s var(--ease-out), transform 0.4s var(--ease-out), visibility 0s linear 0.4s;
     }
 
     .is-open .deck {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: translateY(0) scale(1);
-      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: opacity 0.35s var(--ease-out), transform 0.4s var(--ease-out), visibility 0s;
     }
 
     .sheet-stage {
       width: min(440px, 92vw);
       height: min(660px, calc(100svh - 7rem));
       position: relative;
+      touch-action: pan-y;
     }
 
     .sheet {
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.55), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,0.45), transparent 18%),
         var(--paper);
-      border: 1px solid rgba(240, 99, 146, 0.18);
+      border: 1px solid rgba(143, 94, 103, 0.12);
       border-radius: 14px;
-      box-shadow: 0 20px 40px rgba(240, 99, 146, 0.18);
+      box-shadow: 0 16px 32px var(--shadow);
       padding: 1.35rem 1.2rem 1.2rem;
       display: flex;
       flex-direction: column;
       opacity: 0;
-      transform: translateX(24px);
-      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translate3d(28px, 0, 0);
+      transition: opacity 0.28s var(--ease-out), transform 0.32s var(--ease-out);
       pointer-events: none;
       overflow: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
     .sheet.is-active {
       opacity: 1;
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
       pointer-events: auto;
       z-index: 2;
+      overflow-y: auto;
     }
 
     .sheet.is-left {
       opacity: 0;
-      transform: translateX(-24px);
+      transform: translate3d(-28px, 0, 0);
       z-index: 1;
+    }
+
+    .sheet.is-dragging {
+      transition: none;
     }
 
     .sheet__meta {
       font-family: var(--display);
       letter-spacing: 0.2em;
       font-size: 0.72rem;
-      color: var(--pink-deep);
+      color: var(--rose-deep);
       margin-bottom: 0.8rem;
     }
 
@@ -321,7 +347,7 @@
       font-weight: 400;
       letter-spacing: 0.05em;
       line-height: 1.25;
-      color: #6d3a4c;
+      color: #4a3b3f;
     }
 
     .sheet h1 {
@@ -342,7 +368,7 @@
     }
 
     .sheet .emphasis {
-      color: var(--pink-deep);
+      color: var(--rose-deep);
       font-family: var(--display);
       font-size: 1.08rem;
       letter-spacing: 0.04em;
@@ -352,9 +378,9 @@
     .sheet .sign {
       margin-top: auto;
       padding-top: 1rem;
-      border-top: 1px solid rgba(240, 99, 146, 0.18);
+      border-top: 1px solid rgba(143, 94, 103, 0.14);
       font-family: var(--display);
-      color: var(--pink-deep);
+      color: var(--rose-deep);
       letter-spacing: 0.08em;
     }
 
@@ -381,20 +407,20 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      animation: softZoom 12s ease-in-out infinite alternate;
+      transform: scale(1.01);
     }
 
     .photo--placeholder {
       display: grid;
       place-items: center;
       background:
-        linear-gradient(135deg, rgba(255, 143, 181, 0.18), rgba(255, 214, 230, 0.5)),
+        linear-gradient(135deg, rgba(176, 122, 130, 0.12), rgba(241, 232, 228, 0.8)),
         repeating-linear-gradient(
           -12deg,
           transparent,
           transparent 10px,
-          rgba(240, 99, 146, 0.05) 10px,
-          rgba(240, 99, 146, 0.05) 11px
+          rgba(143, 94, 103, 0.04) 10px,
+          rgba(143, 94, 103, 0.04) 11px
         );
       color: var(--ink-soft);
       font-family: var(--display);
@@ -418,33 +444,41 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.35s ease 0.15s, visibility 0s linear 0.5s;
+      transition: opacity 0.28s ease 0.1s, visibility 0s linear 0.4s;
     }
 
     .is-open .nav {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 0.35s ease 0.15s, visibility 0s;
+      transition: opacity 0.28s ease 0.1s, visibility 0s;
     }
 
     .nav button {
       appearance: none;
-      border: 1px solid rgba(240, 99, 146, 0.35);
-      background: rgba(255, 255, 255, 0.75);
-      color: var(--pink-deep);
+      border: 1px solid rgba(143, 94, 103, 0.22);
+      background: rgba(250, 247, 245, 0.9);
+      color: var(--rose-deep);
       font: inherit;
-      letter-spacing: 0.12em;
-      padding: 0.55rem 0.9rem;
-      border-radius: 999px;
+      letter-spacing: 0.1em;
+      padding: 0.7rem 1rem;
+      min-height: 44px;
+      min-width: 72px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.25s ease, opacity 0.25s ease;
+      transition: background 0.2s ease, opacity 0.2s ease, transform 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     .nav button:hover:not(:disabled),
     .nav button:focus-visible:not(:disabled) {
       background: #fff;
       outline: none;
+    }
+
+    .nav button:active:not(:disabled) {
+      transform: scale(0.97);
     }
 
     .nav button:disabled {
@@ -458,13 +492,13 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: rgba(240, 99, 146, 0.28);
-      transition: background 0.25s ease, transform 0.25s ease;
+      background: rgba(143, 94, 103, 0.22);
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
     .dots span.is-on {
-      background: var(--pink-deep);
-      transform: scale(1.2);
+      background: var(--rose-deep);
+      transform: scale(1.15);
     }
 
     .page-index {
@@ -475,13 +509,13 @@
       font-family: var(--display);
       letter-spacing: 0.12em;
       font-size: 0.8rem;
-      color: var(--pink-deep);
+      color: var(--rose-deep);
       opacity: 0;
-      transition: opacity 0.35s ease;
+      transition: opacity 0.28s ease;
       pointer-events: none;
     }
 
-    .is-open .page-index { opacity: 0.85; }
+    .is-open .page-index { opacity: 0.78; }
 
 
     /* —— Easter eggs —— */
@@ -490,22 +524,22 @@
       left: 50%;
       bottom: 18%;
       z-index: 20;
-      transform: translate(-50%, 12px);
+      transform: translate(-50%, 10px);
       max-width: min(320px, calc(100vw - 2rem));
       padding: 0.85rem 1.1rem;
-      background: rgba(255, 245, 248, 0.96);
-      border: 1px solid rgba(240, 99, 146, 0.28);
-      border-radius: 14px;
-      color: #6d3a4c;
+      background: rgba(250, 247, 245, 0.96);
+      border: 1px solid rgba(143, 94, 103, 0.18);
+      border-radius: 12px;
+      color: #4a3b3f;
       font-family: var(--display);
       letter-spacing: 0.06em;
       font-size: 0.95rem;
       line-height: 1.55;
       text-align: center;
-      box-shadow: 0 14px 28px rgba(240, 99, 146, 0.2);
+      box-shadow: 0 12px 24px var(--shadow);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transition: opacity 0.28s ease, transform 0.28s ease;
     }
 
     .egg-toast.is-on {
@@ -521,24 +555,24 @@
       font: inherit;
       padding: 0;
       cursor: pointer;
-      border-bottom: 1px dashed rgba(240, 99, 146, 0.45);
-      transition: color 0.25s ease, border-color 0.25s ease;
+      border-bottom: 1px dashed rgba(143, 94, 103, 0.4);
+      transition: color 0.2s ease, border-color 0.2s ease;
     }
 
     .egg-word:hover,
     .egg-word:focus-visible {
-      color: var(--pink-deep);
-      border-bottom-color: var(--pink-deep);
+      color: var(--rose-deep);
+      border-bottom-color: var(--rose-deep);
       outline: none;
     }
 
     .egg-word.is-found {
       border-bottom-style: solid;
-      color: var(--pink-deep);
+      color: var(--rose-deep);
     }
 
     .sheet[data-egg="secret"] .sheet__meta {
-      color: #e0487c;
+      color: var(--seal);
     }
 
     .envelope__heart {
@@ -563,32 +597,27 @@
     }
 
     @keyframes softPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(240, 99, 146, 0); }
-      50% { box-shadow: 0 0 0 6px rgba(240, 99, 146, 0.16); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(143, 94, 103, 0); }
+      50% { box-shadow: 0 0 0 5px rgba(143, 94, 103, 0.12); }
     }
     @keyframes floatIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes softZoom {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.25; transform: scale(0.8); }
-      50% { opacity: 0.8; transform: scale(1.15); }
+      from { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.98); }
+      to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
     }
 
     @media (max-width: 480px) {
-      .envelope-wrap { width: min(520px, 96vw); }
-      .sheet { padding: 1.1rem 1rem 1rem; border-radius: 12px; }
-      .nav button { padding: 0.5rem 0.7rem; letter-spacing: 0.08em; font-size: 0.85rem; }
+      .envelope-wrap { width: min(520px, 96vw); box-shadow: 0 12px 24px var(--shadow); }
+      .sheet { padding: 1.05rem 0.95rem 0.95rem; border-radius: 12px; box-shadow: 0 12px 24px var(--shadow); }
+      .sheet-stage { height: min(660px, calc(100svh - 6.5rem)); }
+      .nav button { padding: 0.7rem 0.85rem; letter-spacing: 0.06em; font-size: 0.88rem; }
+      .open-btn { width: min(280px, 86vw); }
+      .mail, .deck, .sheet, .envelope__flap {
+        transition-duration: 0.24s;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .envelope-wrap, .photo img, .sparkles i, .mail, .deck, .sheet, .envelope__flap {
+      .envelope-wrap, .mail, .deck, .sheet, .envelope__flap, .nav button.is-hint {
         animation: none !important;
         transition: none !important;
       }
@@ -746,7 +775,7 @@
         window.setTimeout(function () {
           app.classList.add("is-open");
           deck.setAttribute("aria-hidden", "false");
-        }, 420);
+        }, 280);
       }
 
       function unlockSecret(fromNav) {
@@ -847,15 +876,70 @@
       nextBtn.addEventListener("click", function () { go(1); });
 
       var touchX = null;
+      var touchY = null;
+      var dragging = false;
+      var lockAxis = null;
+
+      function activeSheet() {
+        return visibleSheets()[index] || null;
+      }
+
+      function resetDragVisual() {
+        var sheet = activeSheet();
+        if (!sheet) return;
+        sheet.classList.remove("is-dragging");
+        sheet.style.transform = "";
+        sheet.style.opacity = "";
+      }
+
       deck.addEventListener("touchstart", function (e) {
+        if (!opened || !e.changedTouches.length) return;
         touchX = e.changedTouches[0].clientX;
+        touchY = e.changedTouches[0].clientY;
+        dragging = false;
+        lockAxis = null;
       }, { passive: true });
+
+      deck.addEventListener("touchmove", function (e) {
+        if (touchX == null || !e.changedTouches.length) return;
+        var x = e.changedTouches[0].clientX;
+        var y = e.changedTouches[0].clientY;
+        var dx = x - touchX;
+        var dy = y - touchY;
+
+        if (!lockAxis) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          lockAxis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+        }
+        if (lockAxis !== "x") return;
+
+        dragging = true;
+        var sheet = activeSheet();
+        if (!sheet) return;
+        sheet.classList.add("is-dragging");
+        var resist = Math.max(-88, Math.min(88, dx * 0.55));
+        sheet.style.transform = "translate3d(" + resist + "px, 0, 0)";
+        sheet.style.opacity = String(Math.max(0.55, 1 - Math.abs(resist) / 180));
+      }, { passive: true });
+
       deck.addEventListener("touchend", function (e) {
-        if (touchX == null) return;
+        if (touchX == null || !e.changedTouches.length) return;
         var dx = e.changedTouches[0].clientX - touchX;
         touchX = null;
-        if (Math.abs(dx) < 40) return;
+        touchY = null;
+        lockAxis = null;
+        resetDragVisual();
+        if (!dragging || Math.abs(dx) < 48) return;
         go(dx < 0 ? 1 : -1);
+        dragging = false;
+      }, { passive: true });
+
+      deck.addEventListener("touchcancel", function () {
+        touchX = null;
+        touchY = null;
+        lockAxis = null;
+        dragging = false;
+        resetDragVisual();
       }, { passive: true });
 
       window.addEventListener("keydown", function (e) {
