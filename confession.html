@@ -351,6 +351,80 @@
       transition: none;
     }
 
+    .sheet--story {
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2.2rem;
+    }
+
+    .sheet--story.is-active {
+      overflow-y: auto;
+    }
+
+    .sheet--story .wall {
+      flex: none;
+      height: min(320px, 48vh);
+      margin: 0.85rem 0 0.4rem;
+    }
+
+    .sheet--story .map-block {
+      flex: none;
+      margin: 0.5rem 0 0.75rem;
+    }
+
+    .sheet--story .map-canvas {
+      flex: none;
+      height: min(250px, 42vh);
+      min-height: 200px;
+    }
+
+    .sheet--story .caption {
+      margin-top: 0.35rem;
+    }
+
+    .scene {
+      margin: 1.05rem 0 0.2rem;
+      padding: 0.85rem 0.9rem;
+      border-radius: 12px;
+      background: rgba(255, 245, 248, 0.72);
+      border: 1px solid rgba(224, 138, 163, 0.14);
+    }
+
+    .scene h2 {
+      margin: 0 0 0.45rem;
+      font-size: 1.02rem;
+    }
+
+    .scene p {
+      margin-bottom: 0.55rem;
+    }
+
+    .scene p:last-child {
+      margin-bottom: 0;
+    }
+
+    .scene__time {
+      display: block;
+      font-family: var(--display);
+      letter-spacing: 0.16em;
+      font-size: 0.68rem;
+      color: var(--rose-deep);
+      margin-bottom: 0.4rem;
+      opacity: 0.85;
+    }
+
+
+    .sheet.is-active .scene {
+      animation: riseIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .sheet.is-active .scene:nth-of-type(1) { animation-delay: 0.18s; }
+    .sheet.is-active .scene:nth-of-type(2) { animation-delay: 0.26s; }
+    .sheet.is-active .scene:nth-of-type(3) { animation-delay: 0.34s; }
+
+
     .sheet__meta {
       font-family: var(--display);
       letter-spacing: 0.2em;
@@ -564,9 +638,9 @@
     }
 
     .sheet.is-active .sheet__meta,
-    .sheet.is-active h1,
-    .sheet.is-active h2,
-    .sheet.is-active p,
+    .sheet.is-active > h1,
+    .sheet.is-active > h2,
+    .sheet.is-active > p,
     .sheet.is-active .wall,
     .sheet.is-active .map-block,
     .sheet.is-active .sign,
@@ -981,25 +1055,36 @@
 
     <div class="deck" aria-hidden="true" id="deck">
       <div class="sheet-stage">
-        <article class="sheet is-active" data-page="0" data-act="开场" data-act-sub="一封还没拆开的信">
+        <article class="sheet sheet--story is-active" data-page="0" data-act="开场" data-act-sub="一封还没拆开的信">
           <p class="sheet__meta">第一幕 · 开场</p>
           <h1>这里放一句主告白文案</h1>
-          <p>第一段占位：写你们怎么认识，或某个你一直记得的瞬间。</p>
-          <p>第二段占位：写你欣赏对方的地方——具体一点会更有温度。</p>
-          <p class="emphasis">第三段占位：把最想说的<span class="egg-word" id="eggWord">那句话</span>放在这里。</p>
-          <p>下一页，我想带你看一段关于「距离」的故事。</p>
+          <p>占位：写你为什么想讲这个故事——不是一口气说完，而是慢慢翻开。</p>
+          <section class="scene">
+            <span class="scene__time">旁白 · 01</span>
+            <h2>关于开始</h2>
+            <p>占位：你们怎么认识，或某个你一直记得的瞬间。</p>
+            <p>占位：那时候你还不知道，这件事会成为后来很多页的开头。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">旁白 · 02</span>
+            <h2>关于你</h2>
+            <p>占位：写你欣赏对方的地方——具体一点会更有温度。</p>
+            <p class="emphasis">占位：把最想说的<span class="egg-word" id="eggWord">那句话</span>放在这里。</p>
+          </section>
+          <p>下一幕，我想带你看一段关于「距离」的故事。</p>
           <div class="sign">
             —— [你的名字]
             <small>日期占位 · 2026.xx.xx</small>
           </div>
         </article>
 
-        <article class="sheet" data-page="1" data-act="第二幕" data-act-sub="佛山 · 上海">
+        <article class="sheet sheet--story" data-page="1" data-act="第二幕" data-act-sub="佛山 · 上海">
           <p class="sheet__meta">第二幕 · 地图</p>
+          <h1>两条坐标</h1>
+          <p>占位：写写为什么是这两座城——一边是出发，一边是抵达，或反过来。</p>
           <div class="map-block">
             <div class="map-canvas" aria-label="中国地图：佛山与上海">
               <svg class="china-map" viewBox="0 0 560 460" role="img" aria-label="中国简略地图">
-                <!-- stylized mainland + Hainan hint -->
                 <path class="land" d="M170 70c30-24 70-34 110-32 38 2 70 18 108 14 34-4 64-22 98-12 28 8 48 30 72 46 20 14 44 18 58 40 12 18 8 42 2 62-6 22 4 44-6 64-10 22-34 34-46 54-14 22-8 48-24 68-14 18-38 24-58 34-26 12-52 30-82 30-34 0-64-18-96-16-28 2-50 20-78 18-30-2-58-18-80-40-20-18-44-26-56-50-12-22-4-48 2-70 6-24-4-46 8-68 14-24 36-40 54-62 12-14 22-30 14-40z"/>
                 <path class="land" d="M248 368c16 10 34 20 54 20 18 0 34-10 50-6 12 3 24 14 36 8 8-4 12-14 10-22-10 8-24 12-36 8-16-4-28-16-44-16-18 0-36 8-52 6-8-1-14-4-18 2z"/>
                 <path class="route" d="M275 355C330 295 375 250 430 215"/>
@@ -1017,48 +1102,85 @@
             </div>
             <div class="map-slots">
               <div class="map-slot" data-city="foshan">
-                <span><strong>佛山</strong>之后在这里放照片</span>
+                <span><strong>佛山</strong></span>
               </div>
               <div class="map-slot" data-city="shanghai">
-                <span><strong>上海</strong>之后在这里放照片</span>
+                <span><strong>上海</strong></span>
               </div>
             </div>
           </div>
-          <div class="caption">
-            <h2>两条坐标，一条路线</h2>
-            <p>占位：写写两座城对你们意味着什么。虚线是心意走过的路。</p>
-          </div>
+          <section class="scene">
+            <span class="scene__time">设定 · 路线</span>
+            <h2>虚线是心意走过的路</h2>
+            <p>占位：写一次分别、一次重逢，或一句「我在这边想你」。</p>
+            <p>占位：地图不会缩短距离，但可以把想对你说的话放在同一页。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">过场</span>
+            <h2>接下来两幕</h2>
+            <p>先回南方的光，再去东边的风。</p>
+          </section>
         </article>
 
-        <article class="sheet" data-page="2" data-act="第三幕" data-act-sub="佛山的光阴">
+        <article class="sheet sheet--story" data-page="2" data-act="第三幕" data-act-sub="佛山的光阴">
           <p class="sheet__meta">第三幕 · 佛山</p>
+          <h1>从南方开始</h1>
+          <p>占位：一句总起——佛山对你们意味着什么。</p>
           <div class="wall wall--mosaic" aria-label="佛山照片墙">
             <div class="wall__cell"><img src="photos/1.jpg" alt="佛山 1" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/2.jpg" alt="佛山 2" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/3.jpg" alt="佛山 3" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/4.jpg" alt="佛山 4" loading="lazy" /></div>
           </div>
-          <div class="caption">
-            <h2>从南方开始</h2>
-            <p>占位：换成佛山相关的照片与一句短旁白。</p>
-          </div>
+          <section class="scene">
+            <span class="scene__time">场景 · 01</span>
+            <h2>街口 / 夜晚 / 某次见面</h2>
+            <p>占位：写一个具体画面。天气、声音、你记得的一句话。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">场景 · 02</span>
+            <h2>还想补充的细节</h2>
+            <p>占位：可以再写一段小事，把那天的细节慢慢铺开。</p>
+            <p>占位：第二段继续讲——为什么这段回忆值得单独成幕。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">过场</span>
+            <h2>然后，往东</h2>
+            <p>占位：用一句短句接到上海。</p>
+          </section>
         </article>
 
-        <article class="sheet" data-page="3" data-act="第四幕" data-act-sub="上海的风">
+        <article class="sheet sheet--story" data-page="3" data-act="第四幕" data-act-sub="上海的风">
           <p class="sheet__meta">第四幕 · 上海</p>
+          <h1>再往东一点</h1>
+          <p>占位：一句总起——上海这一幕想讲什么。</p>
           <div class="wall wall--stack" aria-label="上海照片墙">
             <div class="wall__cell"><img src="photos/5.jpg" alt="上海 1" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/6.jpg" alt="上海 2" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/7.jpg" alt="上海 3" loading="lazy" /></div>
           </div>
-          <div class="caption">
-            <h2>再往东一点</h2>
-            <p>占位：换成上海相关的照片与一句短旁白。</p>
-          </div>
+          <section class="scene">
+            <span class="scene__time">场景 · 01</span>
+            <h2>江边 / 路灯 / 某次等待</h2>
+            <p>占位：写上海的一个具体瞬间。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">场景 · 02</span>
+            <h2>你在这里的样子</h2>
+            <p>占位：写你看到的、想念的、或想一起做还没做的事。</p>
+            <p>占位：可以继续写你想补充的那几句。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">过场</span>
+            <h2>两座城之外</h2>
+            <p>占位：接到「我们」那一幕。</p>
+          </section>
         </article>
 
-        <article class="sheet" data-page="4" data-act="第五幕" data-act-sub="重叠的日子">
+        <article class="sheet sheet--story" data-page="4" data-act="第五幕" data-act-sub="重叠的日子">
           <p class="sheet__meta">第五幕 · 我们</p>
+          <h1>故事在中间相遇</h1>
+          <p>占位：写两座城之外，属于「我们」的部分。</p>
           <div class="wall wall--scatter" aria-label="共同回忆照片墙">
             <div class="wall__cell"><img src="photos/4.jpg" alt="回忆 1" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/1.jpg" alt="回忆 2" loading="lazy" /></div>
@@ -1066,29 +1188,48 @@
             <div class="wall__cell"><img src="photos/2.jpg" alt="回忆 4" loading="lazy" /></div>
             <div class="wall__cell"><img src="photos/3.jpg" alt="回忆 5" loading="lazy" /></div>
           </div>
-          <div class="caption">
-            <h2>故事在中间相遇</h2>
-            <p>占位：两座城之外，属于「我们」的画面。</p>
-          </div>
+          <section class="scene">
+            <span class="scene__time">蒙太奇</span>
+            <h2>拼在一起的日子</h2>
+            <p>占位：列三件小事——聊天、约定、一次刚好赶上的相遇。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">内心独白</span>
+            <h2>我想告诉你的</h2>
+            <p>占位：比告白更轻一点的话，也可以写在这里。</p>
+            <p>占位：第二段继续，写到心里那句为止。</p>
+          </section>
         </article>
 
-        <article class="sheet" data-page="5" data-act="终章" data-act-sub="把喜欢说出口">
+        <article class="sheet sheet--story" data-page="5" data-act="终章" data-act-sub="把喜欢说出口">
           <p class="sheet__meta">终章 · 此刻</p>
           <h1>这里放一句收束的话</h1>
-          <p>占位：写你最想问、或最想确认的那一句。</p>
-          <p class="emphasis">占位：我喜欢你，想和你把故事写下去。</p>
-          <p>谢谢你看到这里。</p>
+          <section class="scene">
+            <span class="scene__time">终章</span>
+            <h2>想问你的那一句</h2>
+            <p>占位：写你最想问、或最想确认的话。</p>
+            <p class="emphasis">占位：我喜欢你，想和你把故事写下去。</p>
+          </section>
+          <section class="scene">
+            <span class="scene__time">谢幕</span>
+            <h2>谢谢你看到这里</h2>
+            <p>占位：一句温柔的收尾。</p>
+          </section>
           <div class="sign">
             —— [你的名字]
             <small>终章</small>
           </div>
         </article>
 
-        <article class="sheet" data-page="6" data-egg="secret" data-act="彩蛋" data-act-sub="只给你的一页" hidden>
+        <article class="sheet sheet--story" data-page="6" data-egg="secret" data-act="彩蛋" data-act-sub="只给你的一页" hidden>
           <p class="sheet__meta">彩蛋 · 只给你</p>
           <h1>隐藏页标题占位</h1>
-          <p>只有把整部「电影」看完，还想再看一眼的人，才会遇见这一页。</p>
-          <p class="emphasis">这里放一句更私密的心里话占位。</p>
+          <section class="scene">
+            <span class="scene__time">片尾彩蛋</span>
+            <h2>只有你看得到</h2>
+            <p>只有把整部短片看完，还想再看一眼的人，才会遇见这一页。</p>
+            <p class="emphasis">这里放一句更私密的心里话占位。</p>
+          </section>
           <div class="sign">
             —— [你的名字]
             <small>被你找到啦</small>
@@ -1220,7 +1361,7 @@
         rebuildDots();
         if (fromNav) {
           index = visibleSheets().length - 1;
-          showToast("终章之后，还有一页只给你", 2400);
+          showToast("还有一页，只给你", 2400);
         }
         return true;
       }
@@ -1307,6 +1448,7 @@
           from.classList.add(dir > 0 ? "is-leave-left" : "is-leave-right");
           to.classList.remove("is-enter-right", "is-enter-left");
           to.classList.add("is-active");
+          if (to.scrollTop) to.scrollTop = 0;
 
           window.setTimeout(finish, TRANS_MS);
         }
@@ -1362,6 +1504,8 @@
         dragRaf = 0;
         var sheet = activeSheet();
         if (!sheet || !dragging || animating) return;
+        // while reading a long card, don't rubber-band the whole page
+        if (sheet.classList.contains("sheet--story") && sheet.scrollTop > 8) return;
         sheet.classList.add("is-dragging");
         var resist = Math.max(-90, Math.min(90, dragDx * 0.62));
         var scale = 1 - Math.abs(resist) / 900;
@@ -1385,7 +1529,7 @@
         var dy = y - touchY;
         if (!lockAxis) {
           if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
-          lockAxis = Math.abs(dx) > Math.abs(dy) * 1.2 ? "x" : "y";
+          lockAxis = Math.abs(dx) > Math.abs(dy) * 1.55 ? "x" : "y";
         }
         if (lockAxis !== "x") return;
         dragging = true;
