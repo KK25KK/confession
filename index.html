@@ -6,17 +6,19 @@
   <title>致 · [名字] — 信封告白</title>
   <style>
     :root {
-      --ink: #3f3336;
-      --ink-soft: #7a6a6e;
-      --paper: #faf7f5;
-      --paper-2: #f1e8e4;
-      --rose: #b07a82;
-      --rose-deep: #8f5e67;
-      --rose-soft: #d4b4b8;
-      --blush: #c9959c;
-      --seal: #9a646e;
-      --mist: #e8e2df;
-      --shadow: rgba(74, 52, 56, 0.16);
+      --ink: #3a3f4a;
+      --ink-soft: #6d7382;
+      --paper: #fbf9fc;
+      --paper-2: #eef2f8;
+      --rose: #c991a4;
+      --rose-deep: #a87388;
+      --rose-soft: #e2c4cf;
+      --blue: #8fa8c4;
+      --blue-soft: #c5d4e5;
+      --blush: #d4a8b6;
+      --seal: #9a7d96;
+      --mist: #e8eef5;
+      --shadow: rgba(70, 85, 110, 0.14);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --display: "Bodoni MT", "Didot", "Palatino Linotype", "Book Antiqua", Georgia, serif;
       --body: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -34,10 +36,10 @@
       font-family: var(--body);
       color: var(--ink);
       background:
-        radial-gradient(circle at 18% 12%, rgba(201, 149, 156, 0.22), transparent 46%),
-        radial-gradient(circle at 88% 18%, rgba(232, 226, 223, 0.9), transparent 42%),
-        radial-gradient(circle at 72% 90%, rgba(176, 122, 130, 0.12), transparent 48%),
-        linear-gradient(168deg, #f4efec 0%, #ebe3e0 48%, #e3d8d5 100%);
+        radial-gradient(circle at 12% 18%, rgba(232, 180, 198, 0.42), transparent 46%),
+        radial-gradient(circle at 88% 14%, rgba(170, 200, 230, 0.48), transparent 44%),
+        radial-gradient(circle at 70% 88%, rgba(196, 170, 200, 0.16), transparent 48%),
+        linear-gradient(168deg, #f7f2f6 0%, #eef2f7 48%, #e6eef6 100%);
       overflow: hidden;
       overscroll-behavior: none;
     }
@@ -68,7 +70,7 @@
 
     .is-open .hint { opacity: 0; }
 
-    .sparkles {
+    .ambient {
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -76,22 +78,67 @@
       z-index: 0;
     }
 
-    .sparkles i {
+    .ambient__orb {
       position: absolute;
-      width: 5px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
+      filter: blur(28px);
+      opacity: 0.45;
+    }
+
+    .ambient__orb--pink {
+      width: 42vw;
+      height: 42vw;
+      max-width: 280px;
+      max-height: 280px;
+      left: -8%;
+      top: 8%;
+      background: rgba(232, 180, 198, 0.55);
+    }
+
+    .ambient__orb--blue {
+      width: 48vw;
+      height: 48vw;
+      max-width: 320px;
+      max-height: 320px;
+      right: -12%;
+      top: 4%;
+      background: rgba(170, 200, 230, 0.5);
+    }
+
+    .ambient__orb--soft {
+      width: 36vw;
+      height: 36vw;
+      max-width: 240px;
+      max-height: 240px;
+      left: 35%;
+      bottom: -6%;
+      background: rgba(200, 188, 214, 0.28);
       opacity: 0.35;
     }
 
-    .sparkles i:nth-child(1) { left: 12%; top: 24%; }
-    .sparkles i:nth-child(2) { left: 78%; top: 20%; width: 4px; height: 4px; opacity: 0.28; }
-    .sparkles i:nth-child(3) { left: 20%; top: 74%; width: 3px; height: 3px; opacity: 0.22; }
-    .sparkles i:nth-child(4) { left: 84%; top: 70%; opacity: 0.3; }
-    .sparkles i:nth-child(5) { left: 50%; top: 14%; width: 3px; height: 3px; opacity: 0.2; }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .ambient__orb--pink { animation: orbDrift 18s ease-in-out infinite alternate; }
+      .ambient__orb--blue { animation: orbDrift 22s ease-in-out infinite alternate-reverse; }
+    }
 
-    .is-open .sparkles { opacity: 0.2; }
+    .is-open .ambient { opacity: 0.55; }
+
+    .fx-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 25;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .fx-heart {
+      position: absolute;
+      font-size: 0.95rem;
+      line-height: 1;
+      opacity: 0;
+      animation: heartRise 1.15s var(--ease-out) forwards;
+      will-change: transform, opacity;
+    }
 
     /* —— Envelope —— */
     .mail {
@@ -101,13 +148,12 @@
       flex-direction: column;
       align-items: center;
       gap: 1.1rem;
-      transition: opacity 0.35s var(--ease-out), transform 0.4s var(--ease-out);
-      will-change: opacity, transform;
+      transition: opacity 0.28s ease, transform 0.28s ease;
     }
 
     .is-open .mail {
       opacity: 0;
-      transform: translate3d(0, 18px, 0) scale(0.94);
+      transform: translate3d(0, 12px, 0) scale(0.96);
       pointer-events: none;
     }
 
@@ -115,9 +161,9 @@
       width: min(560px, 94vw);
       aspect-ratio: 1.45 / 1;
       position: relative;
-      box-shadow: 0 18px 36px var(--shadow);
+      box-shadow: 0 14px 28px var(--shadow);
       border-radius: 10px;
-      animation: floatIn 0.7s var(--ease-out) both;
+      animation: floatIn 0.55s var(--ease-out) both;
     }
 
     .envelope {
@@ -147,26 +193,25 @@
 
     .envelope__back {
       background:
-        linear-gradient(160deg, #efe4e1 0%, #e4d2cf 48%, #d9c3bf 100%);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+        linear-gradient(160deg, #f3e6ec 0%, #e4d5e4 42%, #d5dceb 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
     }
 
     .envelope__pocket {
       background:
         linear-gradient(135deg, transparent 49.6%, rgba(255, 255, 255, 0.22) 50%),
-        linear-gradient(225deg, transparent 49.6%, rgba(143, 94, 103, 0.08) 50%),
-        linear-gradient(180deg, #f0e6e3 0%, #dbc8c4 100%);
+        linear-gradient(225deg, transparent 49.6%, rgba(143, 168, 196, 0.1) 50%),
+        linear-gradient(180deg, #f0e8ef 0%, #d8dde8 100%);
       clip-path: polygon(0 36%, 50% 70%, 100% 36%, 100% 100%, 0 100%);
       z-index: 3;
     }
 
     .envelope__flap {
-      background: linear-gradient(180deg, #f5ece9 0%, #e0cdc9 100%);
+      background: linear-gradient(180deg, #f7eef3 0%, #dfe6f0 100%);
       clip-path: polygon(0 0, 100% 0, 50% 56%);
       transform-origin: top center;
       z-index: 4;
-      transition: transform 0.55s var(--ease-out), opacity 0.55s ease;
-      will-change: transform, opacity;
+      transition: transform 0.4s var(--ease-out), opacity 0.4s ease;
     }
 
     .envelope.is-opening .envelope__flap {
@@ -192,15 +237,15 @@
       position: absolute;
       width: 72px;
       height: 72px;
-      background: radial-gradient(circle at 35% 30%, #c9959c, var(--seal) 62%, #7d4f57);
+      background: radial-gradient(circle at 35% 30%, #d4a8b6, var(--seal) 55%, #7a6f96);
       border-radius: 50%;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 4px 12px rgba(74, 52, 56, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 4px 12px rgba(70, 85, 110, 0.16);
     }
 
     .envelope__heart span {
       position: relative;
       z-index: 1;
-      color: #faf7f5;
+      color: #fbf9fc;
       font-family: var(--display);
       font-size: 0.78rem;
       letter-spacing: 0.12em;
@@ -221,7 +266,7 @@
       font-family: var(--display);
       letter-spacing: 0.16em;
       font-size: clamp(1.25rem, 4vw, 1.65rem);
-      color: #5c474c;
+      color: #4a4f5c;
       text-align: center;
       pointer-events: none;
       text-shadow: 0 1px 0 rgba(255,255,255,0.4);
@@ -233,13 +278,13 @@
       font-family: var(--body);
       font-size: 0.78rem;
       letter-spacing: 0.1em;
-      color: #8a7579;
+      color: #7a8290;
     }
 
     .open-btn {
       appearance: none;
-      border: 1px solid rgba(143, 94, 103, 0.28);
-      background: rgba(250, 247, 245, 0.82);
+      border: 1px solid rgba(143, 168, 196, 0.35);
+      background: rgba(251, 249, 252, 0.82);
       color: var(--rose-deep);
       font-family: var(--display);
       letter-spacing: 0.18em;
@@ -301,18 +346,19 @@
       background:
         linear-gradient(180deg, rgba(255,255,255,0.45), transparent 18%),
         var(--paper);
-      border: 1px solid rgba(143, 94, 103, 0.12);
+      border: 1px solid rgba(143, 168, 196, 0.18);
       border-radius: 14px;
-      box-shadow: 0 16px 32px var(--shadow);
+      box-shadow: 0 12px 24px var(--shadow);
       padding: 1.35rem 1.2rem 1.2rem;
       display: flex;
       flex-direction: column;
       opacity: 0;
       transform: translate3d(28px, 0, 0);
-      transition: opacity 0.28s var(--ease-out), transform 0.32s var(--ease-out);
+      transition: opacity 0.22s ease, transform 0.22s ease;
       pointer-events: none;
       overflow: hidden;
       -webkit-overflow-scrolling: touch;
+      contain: layout paint;
     }
 
     .sheet.is-active {
@@ -347,7 +393,7 @@
       font-weight: 400;
       letter-spacing: 0.05em;
       line-height: 1.25;
-      color: #4a3b3f;
+      color: #42485a;
     }
 
     .sheet h1 {
@@ -378,7 +424,7 @@
     .sheet .sign {
       margin-top: auto;
       padding-top: 1rem;
-      border-top: 1px solid rgba(143, 94, 103, 0.14);
+      border-top: 1px solid rgba(143, 168, 196, 0.2);
       font-family: var(--display);
       color: var(--rose-deep);
       letter-spacing: 0.08em;
@@ -414,13 +460,13 @@
       display: grid;
       place-items: center;
       background:
-        linear-gradient(135deg, rgba(176, 122, 130, 0.12), rgba(241, 232, 228, 0.8)),
+        linear-gradient(135deg, rgba(201, 145, 164, 0.14), rgba(143, 168, 196, 0.18)),
         repeating-linear-gradient(
           -12deg,
           transparent,
           transparent 10px,
-          rgba(143, 94, 103, 0.04) 10px,
-          rgba(143, 94, 103, 0.04) 11px
+          rgba(143, 168, 196, 0.05) 10px,
+          rgba(143, 168, 196, 0.05) 11px
         );
       color: var(--ink-soft);
       font-family: var(--display);
@@ -456,8 +502,8 @@
 
     .nav button {
       appearance: none;
-      border: 1px solid rgba(143, 94, 103, 0.22);
-      background: rgba(250, 247, 245, 0.9);
+      border: 1px solid rgba(143, 168, 196, 0.28);
+      background: rgba(251, 249, 252, 0.9);
       color: var(--rose-deep);
       font: inherit;
       letter-spacing: 0.1em;
@@ -492,7 +538,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: rgba(143, 94, 103, 0.22);
+      background: rgba(143, 168, 196, 0.28);
       transition: background 0.2s ease, transform 0.2s ease;
     }
 
@@ -527,10 +573,10 @@
       transform: translate(-50%, 10px);
       max-width: min(320px, calc(100vw - 2rem));
       padding: 0.85rem 1.1rem;
-      background: rgba(250, 247, 245, 0.96);
-      border: 1px solid rgba(143, 94, 103, 0.18);
+      background: rgba(251, 249, 252, 0.96);
+      border: 1px solid rgba(143, 168, 196, 0.22);
       border-radius: 12px;
-      color: #4a3b3f;
+      color: #42485a;
       font-family: var(--display);
       letter-spacing: 0.06em;
       font-size: 0.95rem;
@@ -555,7 +601,7 @@
       font: inherit;
       padding: 0;
       cursor: pointer;
-      border-bottom: 1px dashed rgba(143, 94, 103, 0.4);
+      border-bottom: 1px dashed rgba(168, 115, 136, 0.4);
       transition: color 0.2s ease, border-color 0.2s ease;
     }
 
@@ -597,27 +643,41 @@
     }
 
     @keyframes softPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(143, 94, 103, 0); }
-      50% { box-shadow: 0 0 0 5px rgba(143, 94, 103, 0.12); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(143, 168, 196, 0); }
+      50% { box-shadow: 0 0 0 5px rgba(143, 168, 196, 0.14); }
     }
     @keyframes floatIn {
-      from { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.98); }
-      to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      from { opacity: 0; transform: translate3d(0, 10px, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    @keyframes orbDrift {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(12px, 18px, 0); }
+    }
+
+    @keyframes heartRise {
+      0% { opacity: 0; transform: translate3d(-50%, 0, 0) scale(0.7); }
+      18% { opacity: 0.85; }
+      100% { opacity: 0; transform: translate3d(calc(-50% + var(--dx, 0px)), -88px, 0) scale(1.05); }
     }
 
     @media (max-width: 480px) {
-      .envelope-wrap { width: min(520px, 96vw); box-shadow: 0 12px 24px var(--shadow); }
-      .sheet { padding: 1.05rem 0.95rem 0.95rem; border-radius: 12px; box-shadow: 0 12px 24px var(--shadow); }
+      .envelope-wrap { width: min(520px, 96vw); box-shadow: 0 8px 18px var(--shadow); }
+      .sheet { padding: 1.05rem 0.95rem 0.95rem; border-radius: 12px; box-shadow: 0 8px 18px var(--shadow); }
       .sheet-stage { height: min(660px, calc(100svh - 6.5rem)); }
       .nav button { padding: 0.7rem 0.85rem; letter-spacing: 0.06em; font-size: 0.88rem; }
       .open-btn { width: min(280px, 86vw); }
       .mail, .deck, .sheet, .envelope__flap {
-        transition-duration: 0.24s;
+        transition-duration: 0.18s;
       }
+      .ambient__orb { filter: blur(22px); opacity: 0.38; }
+      .nav button.is-hint { animation: none; }
+      .fx-heart { animation-duration: 0.95s; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .envelope-wrap, .mail, .deck, .sheet, .envelope__flap, .nav button.is-hint {
+      .envelope-wrap, .mail, .deck, .sheet, .envelope__flap, .nav button.is-hint, .ambient__orb, .fx-heart {
         animation: none !important;
         transition: none !important;
       }
@@ -628,7 +688,12 @@
 </head>
 <body>
   <div class="stage" id="app">
-    <div class="sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient" aria-hidden="true">
+      <span class="ambient__orb ambient__orb--pink"></span>
+      <span class="ambient__orb ambient__orb--blue"></span>
+      <span class="ambient__orb ambient__orb--soft"></span>
+    </div>
+    <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
     <p class="hint">点击信封，或下面的按钮打开</p>
     <p class="page-index" id="pageIndex" aria-live="polite">1 / 4</p>
 
@@ -732,6 +797,7 @@
       var pageIndex = document.getElementById("pageIndex");
       var eggToast = document.getElementById("eggToast");
       var eggWord = document.getElementById("eggWord");
+      var fxLayer = document.getElementById("fxLayer");
       var opened = false;
       var index = 0;
       var secretUnlocked = false;
@@ -768,14 +834,41 @@
         }, ms || 2600);
       }
 
+      function burstSoftHearts() {
+        if (!fxLayer) return;
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var colors = ["#c991a4", "#8fa8c4", "#d4a8b6", "#a8c0d8", "#b07a90"];
+        var count = 5;
+        for (var i = 0; i < count; i++) {
+          var el = document.createElement("span");
+          el.className = "fx-heart";
+          el.textContent = "♡";
+          el.style.left = (42 + Math.random() * 16) + "%";
+          el.style.top = (48 + Math.random() * 8) + "%";
+          el.style.color = colors[i % colors.length];
+          el.style.setProperty("--dx", Math.round((Math.random() - 0.5) * 70) + "px");
+          el.style.animationDelay = (i * 0.05) + "s";
+          fxLayer.appendChild(el);
+          (function (node) {
+            window.setTimeout(function () {
+              if (node.parentNode) node.parentNode.removeChild(node);
+            }, 1400);
+          })(el);
+        }
+      }
+
       function openEnvelope() {
         if (opened) return;
         opened = true;
         envelope.classList.add("is-opening");
+        burstSoftHearts();
+        if (navigator.vibrate) {
+          try { navigator.vibrate(12); } catch (err) {}
+        }
         window.setTimeout(function () {
           app.classList.add("is-open");
           deck.setAttribute("aria-hidden", "false");
-        }, 280);
+        }, 220);
       }
 
       function unlockSecret(fromNav) {
@@ -879,6 +972,8 @@
       var touchY = null;
       var dragging = false;
       var lockAxis = null;
+      var dragRaf = 0;
+      var dragDx = 0;
 
       function activeSheet() {
         return visibleSheets()[index] || null;
@@ -889,7 +984,15 @@
         if (!sheet) return;
         sheet.classList.remove("is-dragging");
         sheet.style.transform = "";
-        sheet.style.opacity = "";
+      }
+
+      function applyDragVisual() {
+        dragRaf = 0;
+        var sheet = activeSheet();
+        if (!sheet || !dragging) return;
+        sheet.classList.add("is-dragging");
+        var resist = Math.max(-72, Math.min(72, dragDx * 0.5));
+        sheet.style.transform = "translate3d(" + resist + "px, 0, 0)";
       }
 
       deck.addEventListener("touchstart", function (e) {
@@ -898,6 +1001,7 @@
         touchY = e.changedTouches[0].clientY;
         dragging = false;
         lockAxis = null;
+        dragDx = 0;
       }, { passive: true });
 
       deck.addEventListener("touchmove", function (e) {
@@ -908,18 +1012,16 @@
         var dy = y - touchY;
 
         if (!lockAxis) {
-          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-          lockAxis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+          if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+          lockAxis = Math.abs(dx) > Math.abs(dy) * 1.15 ? "x" : "y";
         }
         if (lockAxis !== "x") return;
 
         dragging = true;
-        var sheet = activeSheet();
-        if (!sheet) return;
-        sheet.classList.add("is-dragging");
-        var resist = Math.max(-88, Math.min(88, dx * 0.55));
-        sheet.style.transform = "translate3d(" + resist + "px, 0, 0)";
-        sheet.style.opacity = String(Math.max(0.55, 1 - Math.abs(resist) / 180));
+        dragDx = dx;
+        if (!dragRaf) {
+          dragRaf = window.requestAnimationFrame(applyDragVisual);
+        }
       }, { passive: true });
 
       deck.addEventListener("touchend", function (e) {
@@ -928,8 +1030,15 @@
         touchX = null;
         touchY = null;
         lockAxis = null;
+        if (dragRaf) {
+          window.cancelAnimationFrame(dragRaf);
+          dragRaf = 0;
+        }
         resetDragVisual();
-        if (!dragging || Math.abs(dx) < 48) return;
+        if (!dragging || Math.abs(dx) < 52) {
+          dragging = false;
+          return;
+        }
         go(dx < 0 ? 1 : -1);
         dragging = false;
       }, { passive: true });
@@ -939,6 +1048,10 @@
         touchY = null;
         lockAxis = null;
         dragging = false;
+        if (dragRaf) {
+          window.cancelAnimationFrame(dragRaf);
+          dragRaf = 0;
+        }
         resetDragVisual();
       }, { passive: true });
 
