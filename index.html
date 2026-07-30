@@ -6,19 +6,19 @@
   <title>致 · [名字] — 信封告白</title>
   <style>
     :root {
-      --ink: #3a3f4a;
-      --ink-soft: #6d7382;
-      --paper: #fbf9fc;
-      --paper-2: #eef2f8;
-      --rose: #c991a4;
-      --rose-deep: #a87388;
-      --rose-soft: #e2c4cf;
-      --blue: #8fa8c4;
-      --blue-soft: #c5d4e5;
-      --blush: #d4a8b6;
-      --seal: #9a7d96;
-      --mist: #e8eef5;
-      --shadow: rgba(70, 85, 110, 0.14);
+      --ink: #4a5160;
+      --ink-soft: #7d8494;
+      --paper: #fffcfe;
+      --paper-2: #f3f7fc;
+      --rose: #e2b0c0;
+      --rose-deep: #c98aa0;
+      --rose-soft: #f0d4de;
+      --blue: #a8c4de;
+      --blue-soft: #d7e6f4;
+      --blush: #ebc4d0;
+      --seal: #c9a0bc;
+      --mist: #eef4fb;
+      --shadow: rgba(120, 140, 170, 0.12);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --display: "Bodoni MT", "Didot", "Palatino Linotype", "Book Antiqua", Georgia, serif;
       --body: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -36,10 +36,10 @@
       font-family: var(--body);
       color: var(--ink);
       background:
-        radial-gradient(circle at 12% 18%, rgba(232, 180, 198, 0.42), transparent 46%),
-        radial-gradient(circle at 88% 14%, rgba(170, 200, 230, 0.48), transparent 44%),
-        radial-gradient(circle at 70% 88%, rgba(196, 170, 200, 0.16), transparent 48%),
-        linear-gradient(168deg, #f7f2f6 0%, #eef2f7 48%, #e6eef6 100%);
+        radial-gradient(circle at 12% 18%, rgba(242, 198, 214, 0.55), transparent 48%),
+        radial-gradient(circle at 88% 14%, rgba(186, 214, 240, 0.58), transparent 46%),
+        radial-gradient(circle at 70% 88%, rgba(220, 200, 230, 0.22), transparent 50%),
+        linear-gradient(168deg, #fff7fb 0%, #f3f7fc 48%, #eaf3fb 100%);
       overflow: hidden;
       overscroll-behavior: none;
     }
@@ -52,23 +52,21 @@
       position: relative;
     }
 
-    .hint {
+    .page-index {
       position: absolute;
       top: max(1rem, env(safe-area-inset-top));
-      left: 50%;
-      transform: translateX(-50%);
+      right: 1.2rem;
       z-index: 5;
       font-family: var(--display);
-      letter-spacing: 0.22em;
-      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      font-size: 0.8rem;
       color: var(--rose-deep);
-      opacity: 0.78;
-      transition: opacity 0.3s var(--ease-out);
-      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.28s ease;
       pointer-events: none;
     }
 
-    .is-open .hint { opacity: 0; }
+    .is-open .page-index { opacity: 0.7; }
 
     .ambient {
       position: absolute;
@@ -92,7 +90,7 @@
       max-height: 280px;
       left: -8%;
       top: 8%;
-      background: rgba(232, 180, 198, 0.55);
+      background: rgba(242, 198, 214, 0.65);
     }
 
     .ambient__orb--blue {
@@ -102,7 +100,7 @@
       max-height: 320px;
       right: -12%;
       top: 4%;
-      background: rgba(170, 200, 230, 0.5);
+      background: rgba(186, 214, 240, 0.62);
     }
 
     .ambient__orb--soft {
@@ -112,8 +110,8 @@
       max-height: 240px;
       left: 35%;
       bottom: -6%;
-      background: rgba(200, 188, 214, 0.28);
-      opacity: 0.35;
+      background: rgba(220, 200, 230, 0.32);
+      opacity: 0.4;
     }
 
     @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -193,21 +191,21 @@
 
     .envelope__back {
       background:
-        linear-gradient(160deg, #f3e6ec 0%, #e4d5e4 42%, #d5dceb 100%);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+        linear-gradient(160deg, #fbf0f5 0%, #edf0f8 42%, #e4ecf7 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
     }
 
     .envelope__pocket {
       background:
-        linear-gradient(135deg, transparent 49.6%, rgba(255, 255, 255, 0.22) 50%),
-        linear-gradient(225deg, transparent 49.6%, rgba(143, 168, 196, 0.1) 50%),
-        linear-gradient(180deg, #f0e8ef 0%, #d8dde8 100%);
+        linear-gradient(135deg, transparent 49.6%, rgba(255, 255, 255, 0.28) 50%),
+        linear-gradient(225deg, transparent 49.6%, rgba(168, 196, 222, 0.12) 50%),
+        linear-gradient(180deg, #f7eef3 0%, #e4ebf5 100%);
       clip-path: polygon(0 36%, 50% 70%, 100% 36%, 100% 100%, 0 100%);
       z-index: 3;
     }
 
     .envelope__flap {
-      background: linear-gradient(180deg, #f7eef3 0%, #dfe6f0 100%);
+      background: linear-gradient(180deg, #fff5f9 0%, #e8eef8 100%);
       clip-path: polygon(0 0, 100% 0, 50% 56%);
       transform-origin: top center;
       z-index: 4;
@@ -237,15 +235,15 @@
       position: absolute;
       width: 72px;
       height: 72px;
-      background: radial-gradient(circle at 35% 30%, #d4a8b6, var(--seal) 55%, #7a6f96);
+      background: radial-gradient(circle at 35% 30%, #ebc4d0, var(--seal) 55%, #a8b8d4);
       border-radius: 50%;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 4px 12px rgba(70, 85, 110, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 12px rgba(120, 140, 170, 0.14);
     }
 
     .envelope__heart span {
       position: relative;
       z-index: 1;
-      color: #fbf9fc;
+      color: #fffcfe;
       font-family: var(--display);
       font-size: 0.78rem;
       letter-spacing: 0.12em;
@@ -266,10 +264,10 @@
       font-family: var(--display);
       letter-spacing: 0.16em;
       font-size: clamp(1.25rem, 4vw, 1.65rem);
-      color: #4a4f5c;
+      color: #5a6272;
       text-align: center;
       pointer-events: none;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.55);
     }
 
     .envelope__label small {
@@ -278,36 +276,7 @@
       font-family: var(--body);
       font-size: 0.78rem;
       letter-spacing: 0.1em;
-      color: #7a8290;
-    }
-
-    .open-btn {
-      appearance: none;
-      border: 1px solid rgba(143, 168, 196, 0.35);
-      background: rgba(251, 249, 252, 0.82);
-      color: var(--rose-deep);
-      font-family: var(--display);
-      letter-spacing: 0.18em;
-      font-size: 0.95rem;
-      padding: 0.85rem 1.55rem;
-      min-height: 48px;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      box-shadow: 0 6px 16px rgba(74, 52, 56, 0.08);
-    }
-
-    .open-btn:hover,
-    .open-btn:focus-visible {
-      background: #fff;
-      transform: translateY(-1px);
-      outline: none;
-    }
-
-    .open-btn:active {
-      transform: translateY(1px) scale(0.98);
+      color: #8a93a3;
     }
 
     /* —— Letter deck —— */
@@ -393,7 +362,7 @@
       font-weight: 400;
       letter-spacing: 0.05em;
       line-height: 1.25;
-      color: #42485a;
+      color: #4f5668;
     }
 
     .sheet h1 {
@@ -478,6 +447,87 @@
 
     .caption { margin-top: 0.85rem; }
 
+    /* —— Per-card personality —— */
+    .sheet[data-page="0"] {
+      background:
+        linear-gradient(90deg, rgba(226, 176, 192, 0.35), transparent 14px),
+        linear-gradient(180deg, rgba(255,255,255,0.55), transparent 18%),
+        var(--paper);
+      border-color: rgba(226, 176, 192, 0.28);
+    }
+    .sheet[data-page="0"] .sheet__meta { color: var(--rose-deep); }
+    .sheet[data-page="0"]::after {
+      content: "";
+      position: absolute;
+      right: 1.1rem;
+      top: 1.1rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #f0d4de, rgba(226, 176, 192, 0.35));
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .sheet[data-page="1"] {
+      background:
+        linear-gradient(180deg, rgba(167, 196, 222, 0.18), transparent 22%),
+        var(--paper);
+      border-color: rgba(168, 196, 222, 0.35);
+    }
+    .sheet[data-page="1"] .sheet__meta { color: #7a9bb8; }
+    .sheet[data-page="1"] .photo {
+      box-shadow: 0 0 0 3px rgba(215, 230, 244, 0.9), 0 8px 18px rgba(120, 150, 180, 0.12);
+      border-radius: 12px;
+    }
+
+    .sheet[data-page="2"] {
+      background:
+        radial-gradient(circle at 92% 8%, rgba(242, 198, 214, 0.35), transparent 28%),
+        var(--paper);
+      border-style: dashed;
+      border-color: rgba(226, 176, 192, 0.4);
+    }
+    .sheet[data-page="2"] .sheet__meta { color: #c98aa0; letter-spacing: 0.24em; }
+    .sheet[data-page="2"] .photo {
+      border-radius: 18px 8px 18px 8px;
+    }
+
+    .sheet[data-page="3"] {
+      background:
+        linear-gradient(135deg, rgba(242, 198, 214, 0.2), transparent 40%),
+        linear-gradient(225deg, rgba(186, 214, 240, 0.25), transparent 42%),
+        var(--paper);
+      border-color: rgba(180, 200, 220, 0.3);
+    }
+    .sheet[data-page="3"] .sheet__meta {
+      background: linear-gradient(90deg, #c98aa0, #8fb0cc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sheet[data-page="3"] .photo {
+      border-radius: 50% 50% 12px 12px / 18% 18% 12px 12px;
+    }
+
+    .sheet[data-page="4"] {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(232, 210, 240, 0.35), transparent 45%),
+        linear-gradient(180deg, #fffbfe, #f5f8fc);
+      border-color: rgba(201, 160, 188, 0.35);
+    }
+    .sheet[data-page="4"] .sheet__meta { color: #b08ab0; }
+    .sheet[data-page="4"]::before {
+      content: "✦";
+      position: absolute;
+      left: 1.15rem;
+      bottom: 1.15rem;
+      color: #c9a0bc;
+      opacity: 0.45;
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
     .nav {
       position: absolute;
       bottom: max(1rem, env(safe-area-inset-bottom));
@@ -547,23 +597,6 @@
       transform: scale(1.15);
     }
 
-    .page-index {
-      position: absolute;
-      top: max(1rem, env(safe-area-inset-top));
-      right: 1.2rem;
-      z-index: 5;
-      font-family: var(--display);
-      letter-spacing: 0.12em;
-      font-size: 0.8rem;
-      color: var(--rose-deep);
-      opacity: 0;
-      transition: opacity 0.28s ease;
-      pointer-events: none;
-    }
-
-    .is-open .page-index { opacity: 0.78; }
-
-
     /* —— Easter eggs —— */
     .egg-toast {
       position: fixed;
@@ -632,19 +665,10 @@
       animation: sealPop 0.35s ease;
     }
 
-    .nav button.is-hint {
-      animation: softPulse 1.6s ease-in-out infinite;
-    }
-
     @keyframes sealPop {
       0% { transform: translate(-50%, -50%) scale(1); }
       45% { transform: translate(-50%, -50%) scale(1.12); }
       100% { transform: translate(-50%, -50%) scale(1); }
-    }
-
-    @keyframes softPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(143, 168, 196, 0); }
-      50% { box-shadow: 0 0 0 5px rgba(143, 168, 196, 0.14); }
     }
     @keyframes floatIn {
       from { opacity: 0; transform: translate3d(0, 10px, 0); }
@@ -667,17 +691,15 @@
       .sheet { padding: 1.05rem 0.95rem 0.95rem; border-radius: 12px; box-shadow: 0 8px 18px var(--shadow); }
       .sheet-stage { height: min(660px, calc(100svh - 6.5rem)); }
       .nav button { padding: 0.7rem 0.85rem; letter-spacing: 0.06em; font-size: 0.88rem; }
-      .open-btn { width: min(280px, 86vw); }
       .mail, .deck, .sheet, .envelope__flap {
         transition-duration: 0.18s;
       }
       .ambient__orb { filter: blur(22px); opacity: 0.38; }
-      .nav button.is-hint { animation: none; }
       .fx-heart { animation-duration: 0.95s; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .envelope-wrap, .mail, .deck, .sheet, .envelope__flap, .nav button.is-hint, .ambient__orb, .fx-heart {
+      .envelope-wrap, .mail, .deck, .sheet, .envelope__flap, .ambient__orb, .fx-heart {
         animation: none !important;
         transition: none !important;
       }
@@ -694,7 +716,6 @@
       <span class="ambient__orb ambient__orb--soft"></span>
     </div>
     <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
-    <p class="hint">点击信封，或下面的按钮打开</p>
     <p class="page-index" id="pageIndex" aria-live="polite">1 / 4</p>
 
     <div class="mail" id="mail">
@@ -710,7 +731,6 @@
           </span>
         </div>
       </div>
-      <button type="button" class="open-btn" id="openBtn">打开信封</button>
     </div>
 
     <div class="deck" aria-hidden="true" id="deck">
@@ -786,7 +806,6 @@
     (function () {
       var app = document.getElementById("app");
       var envelope = document.getElementById("envelope");
-      var openBtn = document.getElementById("openBtn");
       var sealBtn = document.getElementById("sealBtn");
       var deck = document.getElementById("deck");
       var sheets = Array.prototype.slice.call(document.querySelectorAll(".sheet"));
@@ -899,8 +918,7 @@
         prevBtn.disabled = index <= 0;
         var atEnd = index >= total - 1;
         nextBtn.disabled = atEnd && secretUnlocked;
-        nextBtn.classList.toggle("is-hint", atEnd && !secretUnlocked);
-        nextBtn.textContent = atEnd && !secretUnlocked ? "再翻一下？" : "下一张";
+        nextBtn.textContent = "下一张";
         pageIndex.textContent = (index + 1) + " / " + total;
       }
 
@@ -951,7 +969,6 @@
           openEnvelope();
         }
       });
-      openBtn.addEventListener("click", openEnvelope);
 
       if (eggWord) {
         eggWord.addEventListener("click", function () {
