@@ -225,7 +225,19 @@
       display: grid;
       place-items: center;
       transition: opacity 0.3s ease, transform 0.35s ease;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .envelope__heart.is-pulse {
+      animation: sealPop 0.35s ease;
+    }
+
+    @keyframes sealPop {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      45% { transform: translate(-50%, -50%) scale(1.12); }
+      100% { transform: translate(-50%, -50%) scale(1); }
     }
 
     .envelope__heart::before {
@@ -757,7 +769,33 @@
       position: absolute;
       transform: translate(-50%, -100%);
       text-align: center;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .map-pin.is-lit .map-pin__dot {
+      background: #f06292;
+      box-shadow: 0 0 0 8px rgba(240, 98, 146, 0.22);
+      animation: none;
+    }
+
+    .map-pin.is-lit .map-pin__label {
+      border-color: rgba(224, 138, 163, 0.55);
+      color: #c45f7a;
+    }
+
+    .china-map .route.is-lit {
+      stroke: #e06b8f;
+      stroke-dasharray: none;
+      opacity: 1;
+      filter: drop-shadow(0 0 4px rgba(224, 107, 143, 0.45));
+    }
+
+    .map-slot.is-unlocked {
+      border-style: solid;
+      border-color: rgba(224, 138, 163, 0.35);
+      background: linear-gradient(135deg, rgba(255, 220, 230, 0.85), rgba(255, 250, 252, 0.98));
     }
 
     .map-pin__dot {
@@ -1473,14 +1511,130 @@
       if (eggWord) {
         eggWord.addEventListener("click", function () {
           eggWord.classList.add("is-found");
-          if (!wordEggDone) {
+            if (!wordEggDone) {
             wordEggDone = true;
-            showToast("关键词彩蛋：这里放更想说的那一句", 3000);
+            showToast("原来你也停在这句", 2800);
+            burstSoftHearts();
           } else {
-            showToast("你已经找到过啦", 1800);
+            showToast("还是这句", 1600);
           }
         });
       }
+
+      // —— more quiet easter eggs ——
+      var sealBtn = document.getElementById("sealBtn");
+      var sealTaps = 0;
+      var sealTimer = null;
+      var sealEggDone = false;
+      var cityOrder = [];
+      var routeEggDone = false;
+      var photoEggDone = false;
+      var endEggDone = false;
+
+      if (sealBtn) {
+        sealBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (opened) {
+            openEnvelope();
+            return;
+          }
+          sealTaps += 1;
+          sealBtn.classList.remove("is-pulse");
+          void sealBtn.offsetWidth;
+          sealBtn.classList.add("is-pulse");
+          window.clearTimeout(sealTimer);
+          sealTimer = window.setTimeout(function () { sealTaps = 0; }, 1500);
+          if (!sealEggDone && sealTaps >= 5) {
+            sealEggDone = true;
+            sealTaps = 0;
+            showToast("信封里还藏着一句，只说给你听", 3000);
+            burstSoftHearts();
+            if (navigator.vibrate) {
+              try { navigator.vibrate([10, 40, 10]); } catch (err) {}
+            }
+          }
+        });
+      }
+
+      var pinFoshan = document.querySelector(".map-pin--foshan");
+      var pinShanghai = document.querySelector(".map-pin--shanghai");
+      var routeLine = document.querySelector(".china-map .route");
+
+      function onCityTap(city, pin) {
+        if (!opened || routeEggDone) return;
+        pin.classList.add("is-lit");
+        cityOrder.push(city);
+        if (cityOrder.length > 2) cityOrder = cityOrder.slice(-2);
+        if (cityOrder[0] === "foshan" && cityOrder[1] === "shanghai") {
+          routeEggDone = true;
+          if (routeLine) routeLine.classList.add("is-lit");
+          Array.prototype.forEach.call(document.querySelectorAll(".map-slot"), function (slot) {
+            slot.classList.add("is-unlocked");
+          });
+          showToast("佛山到上海，心先到了", 3000);
+          burstSoftHearts();
+          if (navigator.vibrate) {
+            try { navigator.vibrate(16); } catch (err) {}
+          }
+        } else if (cityOrder.length === 2) {
+          cityOrder = [city];
+          Array.prototype.forEach.call(document.querySelectorAll(".map-pin.is-lit"), function (p) {
+            if (p !== pin) p.classList.remove("is-lit");
+          });
+        }
+      }
+
+      if (pinFoshan) {
+        pinFoshan.addEventListener("click", function (e) {
+          e.stopPropagation();
+          onCityTap("foshan", pinFoshan);
+        });
+      }
+      if (pinShanghai) {
+        pinShanghai.addEventListener("click", function (e) {
+          e.stopPropagation();
+          onCityTap("shanghai", pinShanghai);
+        });
+      }
+
+      // long-press a photo
+      var pressTimer = null;
+      var pressTarget = null;
+      function clearPress() {
+        window.clearTimeout(pressTimer);
+        pressTimer = null;
+        pressTarget = null;
+      }
+      deck.addEventListener("touchstart", function (e) {
+        var img = e.target.closest && e.target.closest(".wall__cell img, .wall__cell");
+        if (!img || photoEggDone) return;
+        pressTarget = img;
+        pressTimer = window.setTimeout(function () {
+          if (!pressTarget || photoEggDone) return;
+          photoEggDone = true;
+          showToast("这张后面，还有没写完的故事", 2800);
+          burstSoftHearts();
+          clearPress();
+        }, 700);
+      }, { passive: true });
+      deck.addEventListener("touchmove", function () { clearPress(); }, { passive: true });
+      deck.addEventListener("touchend", function () { clearPress(); }, { passive: true });
+      deck.addEventListener("touchcancel", function () { clearPress(); }, { passive: true });
+
+      // double-tap ending sheet
+      var lastTap = 0;
+      deck.addEventListener("click", function (e) {
+        var sheet = activeSheet();
+        if (!sheet || sheet.getAttribute("data-page") !== "5" || endEggDone) return;
+        if (e.target.closest && (e.target.closest(".egg-word") || e.target.closest(".wall"))) return;
+        var now = Date.now();
+        if (now - lastTap < 320) {
+          endEggDone = true;
+          showToast("终章写完，喜欢还在继续", 2800);
+          burstSoftHearts();
+        }
+        lastTap = now;
+      });
 
       var touchX = null;
       var touchY = null;
